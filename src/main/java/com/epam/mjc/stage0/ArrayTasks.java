@@ -119,74 +119,36 @@ public class ArrayTasks {
      * arr = [[3, 1, 2,], [3,2]] -> [[2, 3], [1, 2, 3]]
      * arr = [[5, 4], [7]]       -> [[7], [4, 5]]
      */
-    public static int[][] sortRaggedArray(int[][] arr) {
+    public int[][] sortRaggedArray(int[][] arr) {
         for (int i = 0; i < arr.length; i++) {
-            quickSort(arr[i], 0, arr[i].length - 1);
+            insertionSort(arr[i]);
         }
-        quickSort(arr, 0, arr.length - 1);
+        insertionSort(arr);
         return arr;
     }
 
-    private static void quickSort(int[] arr, int start, int end) {
-        if (start < end) {
-            int pivot = partition(arr, start, end);
-
-            quickSort(arr, start, pivot - 1);
-            quickSort(arr, pivot + 1, end);
-        }
-    }
-
-    private static int partition(int[] arr, int start, int end) {
-        int pivot = arr[end];
-        int wall = start - 1;
-        for (int i = start; i < end; i++) {
-            if (arr[i] < pivot) {
-                wall++;
-                swap(arr, i, wall);
+    public void insertionSort(int[] array) {
+        for (int i = 1; i < array.length; i++) {
+            int current = array[i];
+            int j = i - 1;
+            while(j >= 0 && current < array[j]) {
+                array[j+1] = array[j];
+                j--;
             }
-        }
-        swap(arr, end, wall + 1);
-        return (wall + 1);
-    }
-
-    private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
-    private static void quickSort(int[][] arr, int start, int end) {
-        if (start < end) {
-            int pivot = partition(arr, start, end);
-
-            quickSort(arr, start, pivot - 1);
-            quickSort(arr, pivot + 1, end);
+            array[j+1] = current;
         }
     }
 
-    private static int partition(int[][] arr, int start, int end) {
-        int[] pivot = arr[end];
-        int wall = start - 1;
-        for (int i = start; i < end; i++) {
-            if (arr[i].length < pivot.length) {
-                wall++;
-                swap(arr, i, wall);
+    public void insertionSort(int[][] array) {
+        for (int i = 1; i < array.length; i++) {
+            int[] current = array[i];
+            int j = i - 1;
+            while(j >= 0 && current.length < array[j].length) {
+                array[j+1] = array[j];
+                j--;
             }
+            array[j+1] = current;
         }
-        swap(arr, end, wall + 1);
-        return (wall + 1);
-    }
-
-    private static void swap(int[][] arr, int i, int j) {
-        int[] temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
-    public static void main(String[] args) {
-        int[][] arrTest = new int[][]{new int[]{2, 1}, new int[]{3}, new int[]{1, 6, 3}, new int[] {5, 6}};
-//        sortRaggedArray(arrTest);
-//        System.out.println(Arrays.deepToString(arrTest));
     }
 
 }
